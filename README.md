@@ -6,7 +6,7 @@ Parse human-readable dates in Python.
 Usage
 -----
 
-```
+```python
 from humandate import parse_date
 
 print(parse_date('next month'))
