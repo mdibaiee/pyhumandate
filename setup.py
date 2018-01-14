@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
     name = 'humandate',
     packages = ['humandate'],
-    version = '0.4',
+    version = '0.5',
     description = 'Parse human-readable dates',
     author = 'Mahdi Dibaiee',
     author_email = 'mdibaiee@aol.com',
