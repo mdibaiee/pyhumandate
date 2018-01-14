@@ -1,10 +1,19 @@
 humandate
 ---------
 
-Parse human-readable dates in Python.
+Parse human-readable dates in Python in arbitrary strings.
 
 Usage
 -----
+
+Install using `pip`:
+
+```
+pip install humandate
+
+```
+
+Use the `parse_date` function:
 
 ```python
 from humandate import parse_date
