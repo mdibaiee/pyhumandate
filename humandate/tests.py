@@ -70,6 +70,7 @@ class HumanDateTests(unittest.TestCase):
             'this week': self.today,
             'this month': self.today,
             'this year': self.today,
+            'tomorrow!': self.today + timedelta(days=1),
         }
 
         for (k, date) in tests.items():
@@ -109,6 +110,7 @@ class HumanDateTests(unittest.TestCase):
             '2 seconds ago': (self.now.hour, self.now.minute, self.now.second - 2),
             'past 3 minute': (self.now.hour, self.now.minute - 3, self.now.second),
             'last 10 hours': ((self.now.hour - 10) % 24, self.now.minute, self.now.second),
+            'an hour ago': ((self.now.hour - 1), self.now.minute, self.now.second),
         }
 
         for (k, t) in tests.items():

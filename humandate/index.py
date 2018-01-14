@@ -40,17 +40,24 @@ direction = {
     'past': -1,
 }
 
-transformations = dict(zip((x + 's' for x in multipliers.keys()), multipliers.keys()))
-transformations.update({ 'next': '1', 'upcoming': '1', 'following': '1', 'a': '1', 'an': '1' })
-transformations.update(dict(zip(direction.keys(), (x + ' ' + '1' for x in direction.keys()))))
+symbols = ['!', ',', '@', '#', '$', '%', '^', '&', '*', '?']
+
+transformations = [dict(zip((x + 's' for x in multipliers.keys()), multipliers.keys()))]
+transformations.append(dict(zip(direction.keys(), (x + ' ' + '1' for x in direction.keys()))))
+transformations.append({ 'tomorrow': 'next day' })
+transformations.append({ 'next': '1', 'upcoming': '1', 'following': '1', 'a': '1', 'an': '1' })
 
 keywords = list(multipliers.keys()) + months + months_short + years + days + days_short + list(direction.keys()) + [time_prefix] + time_postfix
 
 text = '12 jan 2019 at 12 will be amazing'
 
 def tokenize(string):
-    pattern = re.compile(r'\b(' + '|'.join(transformations.keys()) + r')\b')
-    string = pattern.sub(lambda x: transformations[x.group()], string)
+    sym_pattern = re.compile(r'([!,@#$%^&*?\'"])')
+    string = sym_pattern.sub(lambda x: ' {} '.format(x.group()), string)
+
+    for ts in transformations:
+        pattern = re.compile(r'\b(' + '|'.join(ts.keys()) + r')\b')
+        string = pattern.sub(lambda x: ts[x.group()], string)
 
     words = string.lower().split(' ')
     n = len(words)
