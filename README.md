@@ -10,7 +10,6 @@ Install using `pip`:
 
 ```
 pip install humandate
-
 ```
 
 Use the `parse_date` function:
