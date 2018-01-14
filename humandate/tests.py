@@ -99,6 +99,7 @@ class HumanDateTests(unittest.TestCase):
             'a week ago': self.today - timedelta(days=7),
             'a month ago': self.today - timedelta(days=30),
             'a year past': self.today - timedelta(days=365),
+            'yesterday': self.today - timedelta(days=1),
         }
 
         for (k, date) in tests.items():

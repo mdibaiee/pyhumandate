@@ -44,7 +44,7 @@ symbols = ['!', ',', '@', '#', '$', '%', '^', '&', '*', '?']
 
 transformations = [dict(zip((x + 's' for x in multipliers.keys()), multipliers.keys()))]
 transformations.append(dict(zip(direction.keys(), (x + ' ' + '1' for x in direction.keys()))))
-transformations.append({ 'tomorrow': 'next day' })
+transformations.append({ 'tomorrow': 'next day', 'yesterday': 'past 1 day' })
 transformations.append({ 'next': '1', 'upcoming': '1', 'following': '1', 'a': '1', 'an': '1' })
 
 keywords = list(multipliers.keys()) + months + months_short + years + days + days_short + list(direction.keys()) + [time_prefix] + time_postfix
