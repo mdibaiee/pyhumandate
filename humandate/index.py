@@ -44,6 +44,8 @@ symbols = ['!', ',', '@', '#', '$', '%', '^', '&', '*', '?']
 
 transformations = [dict(zip((x + 's' for x in multipliers.keys()), multipliers.keys()))]
 transformations.append(dict(zip(direction.keys(), (x + ' ' + '1' for x in direction.keys()))))
+# TODO: find a way to distinguish this `second` from the other `second`
+#transformations.append(dict(zip(['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'], map(str, range(1, 10)))))
 transformations.append({ 'tomorrow': 'next day', 'yesterday': 'past 1 day' })
 transformations.append({ 'next': '1', 'upcoming': '1', 'following': '1', 'a': '1', 'an': '1' })
 
@@ -59,14 +61,23 @@ def tokenize(string):
         pattern = re.compile(r'\b(' + '|'.join(ts.keys()) + r')\b')
         string = pattern.sub(lambda x: ts[x.group()], string)
 
+    space_pattern = re.compile(r'\s{2,}')
+    string = space_pattern.sub(' ', string)
+
     words = string.lower().split(' ')
     n = len(words)
     filtered = []
     for (i, w) in enumerate(words):
+        has_next = i + 1 < n
+        has_prev = i > 0
+        has_prev_f = len(filtered) > 0
+
         if w in keywords:
             filtered.append(w)
-        elif w.isdigit() and ((i + 1 < n and words[i + 1] in keywords) or (i > 0 and words[i - 1] == time_prefix)):
+        elif w.isdigit() and ((has_next and words[i + 1] in keywords) or (has_prev and words[i - 1] == time_prefix)):
             filtered.append(int(w))
+        elif w.isdigit() and has_prev_f and filtered[len(filtered) - 1] in months:
+            filtered.insert(len(filtered) - 1, int(w))
         elif w[0:-1].isdigit():
             postfix = next((x for x in postfixes if w.endswith(x)), None)
             if postfix is not None:

@@ -1,7 +1,7 @@
 import unittest
 import datetime
 from datetime import timedelta
-from index import parse_date, days, months, years
+from index import parse_date, days, months, years, tokenize
 
 class HumanDateTests(unittest.TestCase):
     def setUp(self):
@@ -52,7 +52,10 @@ class HumanDateTests(unittest.TestCase):
         tests = {
             '12 jan': (12, 1),
             '28 february': (28, 2),
-            '1th december': (1, 12)
+            '1th december': (1, 12),
+            'jan 12': (12, 1),
+            'february 28': (28, 2),
+            'december 1th': (1, 12),
         }
 
         for (k, (day, m)) in tests.items():
