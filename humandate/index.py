@@ -1,7 +1,6 @@
 import datetime
 from datetime import timedelta
 import re
-from itertools import repeat
 
 days_long = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 days_short = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
@@ -54,7 +53,7 @@ keywords = list(multipliers.keys()) + months + months_short + years + days + day
 text = '12 jan 2019 at 12 will be amazing'
 
 def tokenize(string):
-    sym_pattern = re.compile(r'([!,@#$%^&*?\'"])')
+    sym_pattern = re.compile(r'([!,@#$%^&*?\'".])')
     string = sym_pattern.sub(lambda x: ' {} '.format(x.group()), string)
 
     for ts in transformations:
