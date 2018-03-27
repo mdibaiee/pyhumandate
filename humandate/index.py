@@ -20,7 +20,7 @@ postfixes = {
 
 time_prefix = 'at'
 time_postfix = ['am', 'pm']
-day_postfix = 'th'
+day_postfix = ['th', 'st', 'nd', 'rd']
 
 multipliers = {
     'second': ('seconds', 1),
@@ -85,9 +85,9 @@ def tokenize(string):
         elif w[0:-2].isdigit() and w[-2:] in time_postfix and int(w[0:-2]) <= 12:
             filtered.append(int(w[0:-2]))
             filtered.append(w[-2:])
-        elif w[0:-2].isdigit() and w[-2:] == day_postfix:
+        elif w[0:-2].isdigit() and w[-2:] in day_postfix:
             filtered.append(int(w[0:-2]))
-            filtered.append(day_postfix)
+            filtered.append(w[-2:])
         elif ':' in w:
             f, s = w[0:w.index(':')], w[w.index(':') + 1:]
 
@@ -115,7 +115,7 @@ def compute(tokens):
         elif isinstance(t, int) and has_next and tokens[i + 1] in multipliers:
             key, v = multipliers[tokens[i + 1]]
             value += timedelta(**{ key: t * v })
-        elif isinstance(t, int) and has_next and (tokens[i + 1] in months or tokens[i + 1] == day_postfix):
+        elif isinstance(t, int) and has_next and (tokens[i + 1] in months or tokens[i + 1] in day_postfix):
             day = t
         elif isinstance(t, int) and has_next and tokens[i + 1] in time_postfix:
             if tokens[i + 1] == 'am':

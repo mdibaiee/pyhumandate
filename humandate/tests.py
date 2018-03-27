@@ -57,6 +57,9 @@ class HumanDateTests(unittest.TestCase):
             'february 28': (28, 2),
             'december 1th': (1, 12),
             'Feb. 28': (28, 2),
+            'March 31st': (31, 3),
+            'March 23rd': (23, 3),
+            'March 22nd': (22, 3),
         }
 
         for (k, (day, m)) in tests.items():
